@@ -102,13 +102,13 @@ const Login = () => {
                 {({ errors, touched, setFieldValue }) => (
                     <Form>
                         <div>
-                            <label classname="label" htmlFor="email">E-mail:</label>
+                        <label classname="label" htmlFor="email">E-mail:</label>
                             <div className="email-input-container">
-                                {/* Campo de prefixo do e-mail */}
+                                
                                 <Field
                                     name="username"
                                     type="text"
-                                    placeholder="Digite seu nome de usuário"
+                                    placeholder="Digite seu usuário"
                                     className="input"
                                     onChange={(e) => {
                                         const username = e.target.value;
@@ -118,15 +118,17 @@ const Login = () => {
                                 {/* Exibição do domínio fixo */}
                                 <span className="email-domain">{emailPuc}</span>
                             </div>
+                            
                             {errors.email && touched.email ? <div className="error">{errors.email}</div> : null}
-                        </div>
-                        <div>
-                            <label htmlFor="password">Senha:</label>
-                            <Field name="password" type="password" />
-                            {errors.password && touched.password ? <div className="error">{errors.password}</div> : null}
-                        </div>
+                        
+                            <div className="password-input-container">
+                                <label htmlFor="password" classname="label">Senha:</label>
+                                <Field name="password" type="password" className="input" />
+                                {errors.password && touched.password ? <div className="error">{errors.password}</div> : null}
+                            </div>
                         <button type="submit" className='button'>Login</button>
                         <a href="#" onClick={openModal} className="create-account-link">Criar Conta</a>
+                        </div>
                     </Form>
                 )}
             </Formik>
@@ -176,8 +178,8 @@ const Login = () => {
                                 <Field name="password" type="password" className="input"/>
                                 {errors.password && touched.password ? <div className="error">{errors.password}</div> : null}
                             </div>
-                            <button type="submit">Cadastrar</button>
-                            <button type="button" onClick={closeModal}>Cancelar</button>
+                            <button className="buttonmodal" type="submit">Cadastrar</button>
+                            <button className="buttonmodal" type="button" onClick={closeModal}>Cancelar</button>
                         </Form>
                     )}
                 </Formik>
