@@ -34,7 +34,7 @@ const Login = () => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             console.log('Login bem-sucedido:', userCredential.user);
-            navigate('/');
+            navigate('/HomeMain');
         } catch (error) {
             console.error('Erro de login:', error);
         }
@@ -43,6 +43,7 @@ const Login = () => {
     // Para abrir o modal de registro
     const openModal = () => {
         setModalOpen(true);
+        console.log('login')
     };
 
     // Fecha o modal de registro
@@ -66,7 +67,6 @@ const Login = () => {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
             const user = userCredential.user;
-
             if (user) {
                 await sendEmailVerification(user);
                 console.log('Cadastro bem-sucedido:', user);
