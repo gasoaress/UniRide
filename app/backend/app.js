@@ -1,5 +1,3 @@
-// app.js
-
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -7,7 +5,7 @@ const admin = require('firebase-admin');
 const authRoutes = require('./auth'); // Caminho para o arquivo de rotas de autenticação
 
 // Configurar o Firebase Admin SDK
-const serviceAccount = require('./caronas-4918d-firebase-adminsdk-4nzfb-5322265125.json');
+const serviceAccount = require('./configsFireBase.json');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
