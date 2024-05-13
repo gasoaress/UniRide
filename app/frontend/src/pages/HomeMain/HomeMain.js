@@ -93,9 +93,9 @@ const HomeMain = () => {
                 <AutoComplete
                     value={selectedLocationOferece}
                     suggestions={locations.map(location => location.nome)}
-                    completeMethod={handleLocationChangeOferece}
-                    onChange={(e) => handleLocationChangeOferece(e.target.value)}
-                    onSelect={(e) => handleLocationChangeOferece(e.value)} // Este método é chamado quando uma sugestão é selecionada
+                    completeMethod={handleLocationChangeBusca}
+                    onChange={(e) => handleLocationChangeBusca(e.target.value)}
+                    onSelect={(e) => handleLocationChangeBusca(e.value)} // Este método é chamado quando uma sugestão é selecionada
                     dropdown
                     placeholder="Selecione uma localização..."
                     className="autocomplete-input"
