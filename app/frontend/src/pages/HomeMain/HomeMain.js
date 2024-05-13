@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import Autocomplete from 'react-autocomplete';
+import { AutoComplete } from 'primereact/autocomplete';
 import './HomeMain.css';
+import ReactDOM from 'react-dom/client';
+import 'primeicons/primeicons.css';
+import { PrimeReactProvider } from 'primereact/api';
+import 'primeflex/primeflex.css';  
+import 'primereact/resources/primereact.css';
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
 const HomeMain = () => {
     const [isModalOpenOferece, setModalOpenOferece] = useState(false);
@@ -63,24 +69,15 @@ const HomeMain = () => {
                 className={"modal"}
             >
                 <h2>Oferecendo Carona</h2>
-                <Autocomplete
-                    wrapperStyle={{ display: 'block' }}
-                    inputProps={{ className: 'autocomplete-input' }}
-                    menuStyle={{ display: 'block', className: 'autocomplete-menu' }}
-                    getItemValue={(item) => item}
-                    items={locations.map(location => location.nome)}
-                    renderItem={(item, isHighlighted) => (
-                        <div
-                            key={item}
-                            className={`autocomplete-item ${isHighlighted ? 'highlighted' : ''}`}
-                            style={{ background: isHighlighted ? '#f4f4f4' : 'transparent' }}
-                        >
-                            {item}
-                        </div>
-                    )}
+                <AutoComplete
                     value={selectedLocationOferece}
+                    suggestions={locations.map(location => location.nome)}
+                    completeMethod={handleLocationChangeOferece}
                     onChange={(e) => handleLocationChangeOferece(e.target.value)}
-                    onSelect={(value) => handleLocationChangeOferece(value)}
+                    onSelect={(e) => handleLocationChangeOferece(e.value)} // Este método é chamado quando uma sugestão é selecionada
+                    dropdown
+                    placeholder="Selecione uma localização..."
+                    className="autocomplete-input"
                 />
 
 
@@ -93,25 +90,19 @@ const HomeMain = () => {
                 className={"modal"}
             >
                 <h2>Buscando Carona</h2>
-                <Autocomplete
-                    wrapperStyle={{ display: 'block' }}
-                    inputProps={{ className: 'autocomplete-input' }}
-                    menuStyle={{ display: 'block', className: 'autocomplete-menu' }}
-                    getItemValue={(item) => item}
-                    items={locations.map(location => location.nome)}
-                    renderItem={(item, isHighlighted) => (
-                        <div
-                            key={item}
-                            className={`autocomplete-item ${isHighlighted ? 'highlighted' : ''}`}
-                            style={{ background: isHighlighted ? '#f4f4f4' : 'transparent' }}
-                        >
-                            {item}
-                        </div>
-                    )}
+                <AutoComplete
                     value={selectedLocationOferece}
+                    suggestions={locations.map(location => location.nome)}
+                    completeMethod={handleLocationChangeOferece}
                     onChange={(e) => handleLocationChangeOferece(e.target.value)}
-                    onSelect={(value) => handleLocationChangeOferece(value)}
+                    onSelect={(e) => handleLocationChangeOferece(e.value)} // Este método é chamado quando uma sugestão é selecionada
+                    dropdown
+                    placeholder="Selecione uma localização..."
+                    className="autocomplete-input"
                 />
+
+
+
 
 
 
@@ -122,3 +113,4 @@ const HomeMain = () => {
 };
 
 export default HomeMain
+
