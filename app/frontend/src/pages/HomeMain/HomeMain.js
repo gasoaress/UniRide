@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { AutoComplete } from 'primereact/autocomplete';
 import './HomeMain.css';
-import ReactDOM from 'react-dom/client';
 import 'primeicons/primeicons.css';
-import { PrimeReactProvider } from 'primereact/api';
 import 'primeflex/primeflex.css';  
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import { InputText } from "primereact/inputtext";
+import { Button } from 'primereact/button';
+
+
 
 const HomeMain = () => {
     const [isModalOpenOferece, setModalOpenOferece] = useState(false);
@@ -15,20 +17,25 @@ const HomeMain = () => {
     const [selectedLocationOferece, setSelectedLocationOferece] = useState('');
     const [selectedLocationBusca, setSelectedLocationBusca] = useState('');
     const [locations, setLocations] = useState([]);
-
+    const [value, setValue] = useState('');
     useEffect(() => {
+        fetchLocalizacoes();
+    }, []);
+
+    const fetchLocalizacoes = () => {
         fetch('http://localhost:4000/localizacoes')
             .then(response => response.json())
             .then(data => {
-                console.log('Dados recebidos:', data); // Adicione este console.log()
+                console.log('Dados recebidos:', data); // Adicione este console.log() para verificar se os dados estão sendo recebidos corretamente
                 setLocations(data);
             })
             .catch(error => console.error('Erro ao buscar localizações:', error));
-    }, []);
+    };
 
 
     const openModalOferece = () => {
         setModalOpenOferece(true);
+        fetchLocalizacoes();
     };
     const closeModalOferece = () => {
         setModalOpenOferece(false);
@@ -36,19 +43,25 @@ const HomeMain = () => {
 
     const openModalBusca = () => {
         setModalOpenBusca(true);
+        fetchLocalizacoes();
     };
     const closeModalBusca = () => {
         setModalOpenBusca(false);
     };
 
     const handleLocationChangeOferece = (value) => {
-        console.log('Selecionado para oferecer:', value); // Adicione este console.log()
-        setSelectedLocationOferece(value);
+        if (typeof value === 'object') {
+            setSelectedLocationOferece(null);
+        } else {
+            setSelectedLocationOferece(value);
+        }
     };
-
     const handleLocationChangeBusca = (value) => {
-        console.log('Selecionado para buscar:', value); // Adicione este console.log()
-        setSelectedLocationBusca(value);
+        if (typeof value === 'object') {
+            setSelectedLocationBusca(null);
+        } else {
+            setSelectedLocationBusca(value);
+        }
     };
 
     return (
@@ -70,7 +83,7 @@ const HomeMain = () => {
             >
                 <h2>Oferecendo Carona</h2>
                 <AutoComplete
-                    value={selectedLocationOferece}
+                value={selectedLocationOferece}
                     suggestions={locations.map(location => location.nome)}
                     completeMethod={handleLocationChangeOferece}
                     onChange={(e) => handleLocationChangeOferece(e.target.value)}
@@ -81,7 +94,7 @@ const HomeMain = () => {
                 />
 
 
-                <button onClick={closeModalOferece}>Close Modal</button>
+                    <Button label="Enviar" severity="success" />
             </Modal>
             <Modal
                 isOpen={isModalOpenBusca}
@@ -90,12 +103,13 @@ const HomeMain = () => {
                 className={"modal"}
             >
                 <h2>Buscando Carona</h2>
+                <InputText keyfilter="alpha" placeholder="Seu Nome" value={value} onChange={(e) => setValue(e.target.value)} />
                 <AutoComplete
-                    value={selectedLocationOferece}
+                    value={selectedLocationBusca}
                     suggestions={locations.map(location => location.nome)}
                     completeMethod={handleLocationChangeBusca}
                     onChange={(e) => handleLocationChangeBusca(e.target.value)}
-                    onSelect={(e) => handleLocationChangeBusca(e.value)} // Este método é chamado quando uma sugestão é selecionada
+                    onSelect={(e) => handleLocationChangeBusca(e.value)}
                     dropdown
                     placeholder="Selecione uma localização..."
                     className="autocomplete-input"
@@ -106,7 +120,7 @@ const HomeMain = () => {
 
 
 
-                <button onClick={closeModalBusca}>Close Modal</button>
+                <Button label="Enviar" severity="success" />
             </Modal>
         </div>
     );
