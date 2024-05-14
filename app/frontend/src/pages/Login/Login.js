@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import Modal from 'react-modal';
@@ -6,9 +6,11 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVe
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebaseConfig';
 import './Login.css';
+import { Toast } from 'primereact/toast';
+
 
 const Login = () => {
-    const [isModalOpen, setModalOpen] = useState(false);
+    const [isModalOpen, setModalOpen] = useState(false); 
     const navigate = useNavigate();
 
     const emailPuc = '@sga.pucminas.br';
@@ -18,6 +20,10 @@ const Login = () => {
         return `${username}${emailPuc}`;
     };
 
+    const toast = useRef(null);
+    const show = () => {
+        toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
+    };
 
     const validationSchema = Yup.object({
         email: Yup.string()
@@ -37,21 +43,24 @@ const Login = () => {
             navigate('/HomeMain');
         } catch (error) {
             console.error('Erro de login:', error);
+            if (toast.current) {
+                toast.current.show({ severity: 'error', summary: 'Erro de Login', detail: 'As credenciais fornecidas estão incorretas.' });
+            }
         }
     };
 
-    // Para abrir o modal de registro
+
     const openModal = () => {
         setModalOpen(true);
         console.log('login')
     };
 
-    // Fecha o modal de registro
+
     const closeModal = () => {
         setModalOpen(false);
     };
 
-    // Validação do cadastro do e-mail
+
     const registerValidationSchema = Yup.object({
         email: Yup.string()
             .required('E-mail obrigatório')
@@ -87,6 +96,7 @@ const Login = () => {
 
     return (
         <div className="login-container">
+            <Toast ref={toast} />
             <h1>Login</h1>
             <Formik
                 initialValues={{
