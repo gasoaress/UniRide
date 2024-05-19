@@ -1,0 +1,15 @@
+/* OferecendoCaronaPage.css */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card-item {
+    margin-bottom: 1.5rem; /* Adiciona espaçamento vertical entre os cards */
+    margin-right: 1rem; /* Adiciona espaçamento horizontal entre os cards */
+}
+
+.chat-button {
+    margin-top: 0.5rem;
+}
