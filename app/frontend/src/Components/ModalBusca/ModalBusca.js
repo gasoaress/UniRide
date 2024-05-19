@@ -61,7 +61,7 @@ const ModalBusca = ({ isOpen, onRequestClose }) => {
         setIsSubmitting(true);
         const payload = {
             nome: nome,
-            lugar: selectedLocationBusca.id
+            lugar: selectedLocationBusca.nome
         };
         fetch('http://localhost:4000/Buscando', {
             method: 'POST',

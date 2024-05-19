@@ -61,7 +61,7 @@ const ModalOferece = ({ isOpen, onRequestClose }) => {
         setIsSubmitting(true);
         const payload = {
             nome: nome,
-            lugar: selectedLocationOferece.id
+            lugar: selectedLocationOferece.nome
         };
         fetch('http://localhost:4000/oferecendo', {
             method: 'POST',
