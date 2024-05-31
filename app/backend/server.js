@@ -3,7 +3,17 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser'); // Importando o body-parser
 require('dotenv').config();
 const cors = require('cors'); 
+const http = require('http');
+const socketIo = require('socket.io');
+
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server, {
+    cors: {
+        origin: "http://localhost:3000", // Altere para o seu endereço do front-end
+        methods: ["GET", "POST"]
+    }
+});
 
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -101,9 +111,25 @@ app.get('/oferecendo', (req, res) => {
   });
 });
 
+// Gerenciamento de conexões de WebSocket
+io.on('connection', (socket) => {
+    console.log('Novo cliente conectado:', socket.id);
 
+    socket.on('join_room', (room) => {
+        socket.join(room);
+        console.log(`Cliente ${socket.id} entrou na sala ${room}`);
+    });
+
+    socket.on('send_message', (data) => {
+        io.to(data.room).emit('receive_message', data);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Cliente desconectado:', socket.id);
+    });
+});
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });

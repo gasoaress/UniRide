@@ -1,15 +1,31 @@
-/* OferecendoCaronaPage.css */
 .card-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 .card-item {
-    margin-bottom: 1.5rem; /* Adiciona espaçamento vertical entre os cards */
-    margin-right: 1rem; /* Adiciona espaçamento horizontal entre os cards */
+    margin: 10px;
 }
 
-.chat-button {
-    margin-top: 0.5rem;
+.chat-container {
+    height: 300px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+}
+
+.chat-message {
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+.chat-input {
+    display: flex;
+    align-items: center;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 5px;
+    margin-right: 5px;
 }
