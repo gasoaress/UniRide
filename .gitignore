@@ -1,3 +1,5 @@
 app/backend/configsFireBase.json
 
 app/backend/node_modules
+app/frontend/yarn.lock
+app/frontend/yarn.lock
