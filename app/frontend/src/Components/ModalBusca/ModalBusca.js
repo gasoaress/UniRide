@@ -113,7 +113,7 @@ const ModalBusca = ({ isOpen, onRequestClose }) => {
                 dropdown
                 dropdownMode="blank"
                 forceSelection
-                placeholder="Selecione uma localização..."
+                placeholder="Destino"
                 className="autocomplete-input"
                 onChange={(e) => handleLocationChangeBusca(e)}
             />
