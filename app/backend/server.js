@@ -8,7 +8,11 @@ const socketIo = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
+
+const port = process.env.PORT || 3001
+
 const io = socketIo(server, {
+
     cors: {
         origin: "http://localhost:3000", // Altere para o seu endereço do front-end
         methods: ["GET", "POST"]
